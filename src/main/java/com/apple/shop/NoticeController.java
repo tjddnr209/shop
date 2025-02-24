@@ -1,5 +1,6 @@
 package com.apple.shop;
 
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,15 +10,14 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ItemController {
+public class NoticeController {
+    private final NoticeRepository noticeRepository;
 
-    private final ItemRepository itemRepository;
-
-    @GetMapping("/list")
+    @GetMapping("/notice")
     String list(Model model) {
-        List<Item> result = itemRepository.findAll();
+        List<Notice> result = noticeRepository.findAll();
 
-        model.addAttribute("items", result);
-        return "list.html";
+        model.addAttribute("notices", result);
+        return "notice.html";
     }
 }
