@@ -16,7 +16,6 @@ public class ItemController {
     @GetMapping("/list")
     String list(Model model) {
         List<Item> result = itemRepository.findAll();
-
         model.addAttribute("items", result);
         return "list.html";
     }
