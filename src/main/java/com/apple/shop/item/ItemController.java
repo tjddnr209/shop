@@ -1,7 +1,6 @@
-package com.apple.shop;
+package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +43,26 @@ public class ItemController {
         } else {
             return "redirect:/list";
         }
+    }
+
+    @GetMapping("/edit/{id}")
+    String edit(Model model, @PathVariable Long id) {
+
+        Optional<Item> result = itemRepository.findById(id);
+        if (result.isPresent()) {
+            model.addAttribute("data", result.get());
+            return "edit.html";
+        } else {
+            return "redirect:/list";
+        }
+    }
+
+    @PostMapping("/edit")
+    String editItem(Long id, String title, Integer price) {
+
+        editItem(id, title, price);
+
+        return "redirect:/list";
     }
 
 
