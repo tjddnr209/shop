@@ -14,6 +14,7 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemRepository itemRepository;
+    private final ItemService itemService;
 
     @GetMapping("/list")
     String list(Model model) {
@@ -29,10 +30,7 @@ public class ItemController {
 
     @PostMapping("/add")
     String writePost(String title, Integer price) {
-        Item item = new Item();
-        item.setTitle(title);
-        item.setPrice(price);
-        itemRepository.save(item);
+       itemService.saveItem(title, price);
         return "redirect:/list";
     }
 
