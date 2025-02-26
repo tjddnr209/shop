@@ -1,6 +1,7 @@
 package com.apple.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ItemController {
 
     @PostMapping("/add")
     String writePost(String title, Integer price) {
-       itemService.saveItem(title, price);
+        itemService.saveItem(title, price);
         return "redirect:/list";
     }
 
@@ -46,8 +47,7 @@ public class ItemController {
     }
 
     @GetMapping("/edit/{id}")
-    String edit(Model model, @PathVariable Long id) {
-
+    String edit(@PathVariable Long id, Model model) {
         Optional<Item> result = itemRepository.findById(id);
         if (result.isPresent()) {
             model.addAttribute("data", result.get());
@@ -60,11 +60,15 @@ public class ItemController {
     @PostMapping("/edit")
     String editItem(Long id, String title, Integer price) {
 
-        editItem(id, title, price);
+        itemService.editItem(id, title, price);
 
         return "redirect:/list";
     }
 
-
+    @DeleteMapping("/item")
+    ResponseEntity<String> deleteItem(@RequestParam Long id) {
+        itemRepository.deleteById(id);
+        return ResponseEntity.status(200).body("삭제완료");
+    }
 
 }
