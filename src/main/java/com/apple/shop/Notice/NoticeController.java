@@ -1,6 +1,5 @@
-package com.apple.shop;
+package com.apple.shop.Notice;
 
-import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
