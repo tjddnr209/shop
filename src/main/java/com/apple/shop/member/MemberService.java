@@ -14,6 +14,10 @@ public class MemberService {
     public void saveMember(String username,
                            String password,
                            String displayName) throws Exception {
+        var result = memberRepository.findByUsername(username);
+        if (result.isPresent()){
+            throw new Exception("존재하는아이디");
+        }
         if (username.length() < 8 || password.length() < 8){
             throw new Exception("너무짧음");
         }
