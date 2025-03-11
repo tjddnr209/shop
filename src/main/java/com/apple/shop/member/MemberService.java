@@ -29,9 +29,4 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void getData() {
-        var a = memberRepository.findById(1L);
-        var result = a.get();
-        var data = new MemberDTO(result.getUsername(), result.getDisplayName(), result.getId());
-    }
 }

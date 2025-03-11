@@ -1,14 +1,11 @@
 <!doctype html>
 <html>
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href="/main.css" rel = "stylesheet">
-
+    <link href="/main.css" rel="stylesheet">
 </head>
 <body>
 
@@ -24,9 +21,21 @@
         <a th:href="@{ '/edit/' + ${i.id} }">✏️</a>
         <span th:onclick="fetch('/item?id=[[${i.id}]]', { method : 'DELETE' } )
             .then(r => r.text())
-            .then(() => { location.reload(); })
-        ">🗑️</span>
+            .then(() => { location.reload(); })">🗑️</span>
     </div>
+</div>
+
+
+<div class="pagination">
+    <a th:if="${currentPage > 1}" th:href="@{/list/page/{num}(num=${currentPage - 1})}">« 이전</a>
+
+    <a th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
+       th:href="@{/list/page/{num}(num=${pageNum})}"
+       th:text="${pageNum}"
+       th:classappend="${pageNum == currentPage} ? 'active' : ''">
+    </a>
+
+    <a th:if="${currentPage < totalPages}" th:href="@{/list/page/{num}(num=${currentPage + 1})}">다음 »</a>
 </div>
 
 </body>
