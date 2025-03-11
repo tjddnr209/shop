@@ -2,11 +2,10 @@ package com.apple.shop.member;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,5 +35,31 @@ public class MemberController {
     public String myPage(Authentication auth) {
 
         return "mypage.html";
+    }
+
+    @GetMapping("/user/1")
+    @ResponseBody
+    public MemberDTO user() {
+        var a = memberRepository.findById(1L);
+        var result = a.get();
+        var data = new MemberDTO(result.getUsername(), result.getDisplayName(), result.getId());
+        return data;
+    }
+}
+
+class MemberDTO {
+    public String username;
+    public String displayName;
+    public Long id;
+
+    public MemberDTO(String username, String displayName) {
+        this.username = username;
+        this.displayName = displayName;
+    }
+
+    public MemberDTO(String username, String displayName, Long id) {
+        this.username = username;
+        this.displayName = displayName;
+        this.id = id;
     }
 }

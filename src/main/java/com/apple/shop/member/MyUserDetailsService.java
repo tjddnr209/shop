@@ -35,7 +35,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
 }
 
-
 class CustomUser extends User{
     public Long id;
     public String displayName;
