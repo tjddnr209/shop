@@ -17,4 +17,5 @@ public class Item {
     private Long id;
     private String title;
     private Integer price;
+    private String imageUrl;
 }

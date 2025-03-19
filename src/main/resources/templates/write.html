@@ -18,8 +18,32 @@
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <input name="title">
     <input name="price">
+    <input type="hidden" name="imageUrl" id="imageUrl"> <!-- 추가 -->
     <button type="submit">버튼</button>
 </form>
+
+<input type="file" onchange="getURL(this)">
+<img id="preview" src="https://placehold.co/300">
+
+<script>
+    async function getURL(e){
+        let file = e.files[0]
+        let name = encodeURIComponent(file.name)
+        let result = await fetch('/presigned-url?filename=' + name)
+        result = await result.text()
+
+        let uploadResult = await fetch(result, {
+            method: 'PUT',
+            body: file
+        })
+
+        if (uploadResult.ok) {
+            let imageUrl = uploadResult.url.split("?")[0]
+            document.getElementById('preview').src = imageUrl
+            document.getElementById('imageUrl').value = imageUrl
+        }
+    }
+</script>
 
 </body>
 </html>
